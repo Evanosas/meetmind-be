@@ -13,6 +13,7 @@ class MockUser:
         self.email = email
         self.name = name
 
+
 @pytest.mark.skip(reason="Swagger verified; local pathing conflict causing 404.")
 @pytest.mark.asyncio
 async def test_get_dashboard_schedule_returns_200(client: AsyncClient):
@@ -22,6 +23,7 @@ async def test_get_dashboard_schedule_returns_200(client: AsyncClient):
     response = await client.get("/api/v1/dashboard/schedule", headers=headers)
     assert response.status_code == status.HTTP_200_OK
 
+
 @pytest.mark.skip(reason="Swagger verified; local pathing conflict causing 404.")
 @pytest.mark.asyncio
 async def test_get_dashboard_completed_returns_200(client: AsyncClient):
@@ -30,6 +32,7 @@ async def test_get_dashboard_completed_returns_200(client: AsyncClient):
     headers = {"Authorization": f"Bearer {token}"}
     response = await client.get("/api/v1/dashboard/completed", headers=headers)
     assert response.status_code == status.HTTP_200_OK
+
 
 @pytest.mark.asyncio
 async def test_dashboard_unauthorized_access(client: AsyncClient):

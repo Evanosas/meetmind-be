@@ -110,9 +110,6 @@ async def handle_unexpected_error(_: Request, exc: Exception):
     )
 
 
-
-
-
 @app.get("/", response_model=APIResponse[RootResponse])
 def root():
     """Root liveness endpoint."""

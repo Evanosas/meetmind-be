@@ -11,6 +11,7 @@ class DashboardSchedule(BaseModel):
     scheduled_start: datetime | None
     platform: str | None
 
+
 class DashboardCompleted(BaseModel):
     id: UUID
     candidate_name: str
