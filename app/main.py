@@ -20,6 +20,7 @@ from app.core.config import settings
 from app.core.limiter import limiter
 from app.core.logging import setup_logging
 from app.core.responses import APIError, APIResponse, error, success
+from app.schemas.health import RootResponse
 from app.db.session import engine
 
 setup_logging()
@@ -103,7 +104,7 @@ async def handle_unexpected_error(_: Request, exc: Exception):
     )
 
 
-from app.schemas.health import RootResponse
+
 
 
 @app.get("/", response_model=APIResponse[RootResponse])

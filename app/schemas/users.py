@@ -1,6 +1,7 @@
 """Pydantic schemas for User profile and preferences."""
 
 import uuid
+
 from pydantic import BaseModel, EmailStr, Field
 
 

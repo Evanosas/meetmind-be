@@ -20,6 +20,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import settings
 from app.core.exceptions import UserAlreadyExistsException
 from app.core.limiter import limiter
+from app.core.responses import APIError, APIResponse, success
+from app.db.session import get_session
+from app.models.user import User
 from app.schemas.auth import (
     AuthResponse,
     ForgotPasswordRequest,
@@ -37,16 +40,16 @@ from app.services.auth import AuthService
 from app.services.email_service import send_password_reset_email
 from app.services.verification_service import VerificationService
 
-from app.core.responses import APIResponse, APIError, success
-from app.db.session import get_session
-from app.models.user import User
-
 router = APIRouter()
 logger = logging.getLogger(__name__)
 verification_service = VerificationService()
 
 
-@router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=APIResponse[AuthResponse])
+@router.post(
+    "/signup",
+    status_code=status.HTTP_201_CREATED,
+    response_model=APIResponse[AuthResponse],
+)
 @limiter.limit("5/minute")
 async def signup(
     request: Request,
