@@ -5,13 +5,13 @@ from fastapi import APIRouter
 from app.api.v1.routes import (
     ask_mind,
     auth,
+    dashboard,
     health,
     integrations,
     interviews,
     meetings,
     users,
     workspaces,
-    dashboard,
 )
 
 api_router = APIRouter()

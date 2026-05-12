@@ -1,8 +1,11 @@
-import pytest
-from httpx import AsyncClient
-from fastapi import status
-from app.services.auth import AuthService
 from uuid import uuid4
+
+import pytest
+from fastapi import status
+from httpx import AsyncClient
+
+from app.services.auth import AuthService
+
 
 class MockUser:
     def __init__(self, id, email, name):
@@ -10,7 +13,7 @@ class MockUser:
         self.email = email
         self.name = name
 
-@pytest.mark.skip(reason="Endpoint verified in Swagger; local pathing conflict causing 404 in test runner.")
+@pytest.mark.skip(reason="Swagger verified; local pathing conflict causing 404.")
 @pytest.mark.asyncio
 async def test_get_dashboard_schedule_returns_200(client: AsyncClient):
     user = MockUser(id=uuid4(), email="tester@meetmind.ai", name="Obeira Evan")
@@ -19,7 +22,7 @@ async def test_get_dashboard_schedule_returns_200(client: AsyncClient):
     response = await client.get("/api/v1/dashboard/schedule", headers=headers)
     assert response.status_code == status.HTTP_200_OK
 
-@pytest.mark.skip(reason="Endpoint verified in Swagger; local pathing conflict causing 404 in test runner.")
+@pytest.mark.skip(reason="Swagger verified; local pathing conflict causing 404.")
 @pytest.mark.asyncio
 async def test_get_dashboard_completed_returns_200(client: AsyncClient):
     user = MockUser(id=uuid4(), email="tester@meetmind.ai", name="Obeira Evan")

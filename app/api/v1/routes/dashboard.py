@@ -1,8 +1,9 @@
 from fastapi import APIRouter, status
+
 from app.api import deps
-from app.core.responses import APIResponse, APIError, success
+from app.core.responses import APIError, APIResponse, success
+from app.schemas.dashboard import DashboardCompleted, DashboardSchedule
 from app.services.dashboard_service import DashboardService
-from app.schemas.dashboard import DashboardSchedule, DashboardCompleted
 
 router = APIRouter()
 
@@ -25,7 +26,9 @@ async def get_dashboard_schedule(
         data = [
             DashboardSchedule(
                 id=i.id,
-                candidate_name=i.candidate.full_name if i.candidate else "Unknown Candidate",
+                candidate_name=(
+    i.candidate.full_name if i.candidate else "Unknown Candidate"
+),
                 role_title=i.role_title or "Role Pending",
                 scheduled_start=i.scheduled_start,
                 platform=i.platform or "Standard"
@@ -37,10 +40,13 @@ async def get_dashboard_schedule(
             message="Upcoming dashboard schedule retrieved successfully"
         )
         
-    except Exception as e:
+    except Exception:
         # standardizing the error response for the frontend
         raise APIError(
-            message="We encountered an issue loading your schedule. Please try again later.",
+           message=(
+    "We encountered an issue loading your schedule. "
+    "Please try again later."
+),
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             code="dashboard_schedule_error"
         )
@@ -80,7 +86,7 @@ async def get_dashboard_completed(
             message="Recent performance feed retrieved successfully"
         )
 
-    except Exception as e:
+    except Exception:
         raise APIError(
             message="Could not retrieve recent performance data.",
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

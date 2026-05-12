@@ -1,9 +1,12 @@
-from sqlalchemy import select
-from sqlalchemy.orm import joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from uuid import UUID
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
+
 from app.models.interview import Interview
+
 
 class DashboardService:
     @staticmethod

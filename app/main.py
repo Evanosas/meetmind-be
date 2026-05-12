@@ -19,12 +19,12 @@ from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.limiter import limiter
 from app.core.logging import setup_logging
-from app.core.responses import APIError, APIResponse, error, success
+from app.core.responses import APIError, APIResponse, error, success  # Keep this one
 from app.schemas.health import RootResponse
 from app.core.middleware import JWTBlacklistMiddleware
 from app.core.redis import redis_client
-from app.core.responses import APIError, error, success
 from app.db.session import engine
+# DELETE the second app.core.responses line if it's still there!
 
 setup_logging()
 
