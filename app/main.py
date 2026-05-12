@@ -21,6 +21,9 @@ from app.core.limiter import limiter
 from app.core.logging import setup_logging
 from app.core.responses import APIError, APIResponse, error, success
 from app.schemas.health import RootResponse
+from app.core.middleware import JWTBlacklistMiddleware
+from app.core.redis import redis_client
+from app.core.responses import APIError, error, success
 from app.db.session import engine
 
 setup_logging()
@@ -34,6 +37,7 @@ async def lifespan(_: FastAPI):
     yield
     logger.info("Shutting down %s — disposing DB engine", settings.PROJECT_NAME)
     await engine.dispose()
+    await redis_client.aclose()
 
 
 app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
@@ -46,6 +50,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(JWTBlacklistMiddleware)
 
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)
 
